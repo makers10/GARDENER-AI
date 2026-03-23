@@ -1,0 +1,33 @@
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE configurations
+.vscode/
+.idea/
+
+# Database / SQLite
+*.sqlite3
+
+# OS related
+Thumbs.db
+.DS_Store
+
+# Flask / Web project related
+instance/
+.webassets-cache
+uploads/
+
+# Build and distributions
+dist/
+build/
+*.egg-info/

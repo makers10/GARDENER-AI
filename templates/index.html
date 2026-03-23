@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GartenAI | Micro-Climate Forecast</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="glass-bg"></div>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <i data-lucide="leaf" class="icon-primary"></i>
+                <h1>Garten<span>AI</span></h1>
+            </div>
+            <div class="status-indicator">
+                <div class="pulse"></div>
+                <span>Live Monitoring</span>
+            </div>
+            <div class="test-controls">
+                <button id="test-mode-btn" class="btn-toggle">🧪 Enable Test Mode</button>
+            </div>
+            <div class="location-badge">
+                <i data-lucide="map-pin"></i>
+                <span id="location-text">Loading Location...</span>
+            </div>
+        </header>
+
+        <!-- Current Stats -->
+        <section class="stats-grid">
+            <div class="stat-card glass" id="card-temp">
+                <div class="stat-icon"><i data-lucide="thermometer"></i></div>
+                <div class="stat-info">
+                    <span class="label">Temperature</span>
+                    <h2 class="value">--°C</h2>
+                    <p class="sub-value">Next 24h Avg: <span id="avg-temp">--</span>°C</p>
+                </div>
+            </div>
+            <div class="stat-card glass" id="card-humidity">
+                <div class="stat-icon"><i data-lucide="droplets"></i></div>
+                <div class="stat-info">
+                    <span class="label">Humidity</span>
+                    <h2 class="value">--%</h2>
+                    <p class="sub-value">Comfort Zone: <span id="humidity-status">Normal</span></p>
+                </div>
+            </div>
+            <div class="stat-card glass" id="card-vpd">
+                <div class="stat-icon"><i data-lucide="wind"></i></div>
+                <div class="stat-info">
+                    <span class="label">VPD (Vapor Pressure)</span>
+                    <h2 class="value">-- kPa</h2>
+                    <p class="sub-value">Plant Stress: <span id="vpd-status">Low</span></p>
+                </div>
+            </div>
+            <div class="stat-card glass" id="card-rain">
+                <div class="stat-icon"><i data-lucide="cloud-rain"></i></div>
+                <div class="stat-info">
+                    <span class="label">Rain Probability</span>
+                    <h2 class="value">--%</h2>
+                    <p class="sub-value">Next Window: <span id="rain-window">Dry</span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plant Advisor Search (New) -->
+        <section class="plant-advisor glass">
+            <div class="advisor-header">
+                <h3><i data-lucide="info"></i> Plant Expert Advice</h3>
+                <div class="advisor-inputs">
+                    <select id="plant-select" class="btn-toggle">
+                        <option value="Baseline">General Garden</option>
+                        <option value="Tomato">Tomato</option>
+                        <option value="Rose">Rose</option>
+                        <option value="Succulent">Succulent</option>
+                        <option value="Fern">Fern</option>
+                    </select>
+                    <input type="text" id="country-input" placeholder="Country (e.g. IN, US, GB)" maxlength="2" class="btn-toggle">
+                    <button id="get-advice-btn" class="btn-toggle active">Consult AI</button>
+                </div>
+            </div>
+            <div id="plant-advice-content" class="advice-grid hidden">
+                 <!-- Populated by JS -->
+            </div>
+        </section>
+
+        <!-- Main Dashboard View -->
+        <main class="dashboard-content">
+            <div class="chart-container glass">
+                <div class="chart-header">
+                    <h3>7-Day & 24-Hour Micro-Climate Forecast</h3>
+                    <div class="chart-controls">
+                        <button class="btn-toggle active" data-type="temp">Temp & Humid</button>
+                        <button class="btn-toggle" data-type="rain">Rain Probability</button>
+                        <button class="btn-toggle" data-type="daily">7-Day Trend</button>
+                    </div>
+                </div>
+                <canvas id="forecastChart"></canvas>
+            </div>
+
+            <!-- Recommendation Panel -->
+            <aside class="recs-panel glass">
+                <div class="recs-header">
+                    <i data-lucide="sparkles"></i>
+                    <h3>Smart Gardening Advisor</h3>
+                </div>
+                <div class="recs-list" id="recommendations-container">
+                    <!-- Dynamic Items -->
+                     <div class="loading-spinner">Analyzing environment...</div>
+                </div>
+                
+                <div class="garden-tip">
+                    <h4>Gardening Pro Tip</h4>
+                    <p>Water sensors are most accurate when placed 10-15cm deep near the root zone.</p>
+                </div>
+            </aside>
+        </main>
+        
+        <!-- API Alert (Hidden by default) -->
+        <div id="api-error" class="error-toast hidden">
+            <i data-lucide="alert-circle"></i>
+            <p><strong>Config Required:</strong> OpenWeatherMap API Key not found. Showing simulated forecast data.</p>
+        </div>
+
+        <footer>
+            <p>© 2026 GartenAI • Next-Gen Gardening Intelligence</p>
+        </footer>
+    </div>
+
+    <!-- Initialization Scripts -->
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

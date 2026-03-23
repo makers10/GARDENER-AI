@@ -1,0 +1,15 @@
+flask
+flask-cors
+torch
+pandas
+numpy
+scikit-learn
+requests
+python-dotenv
+waitress
+matplotlib
+seaborn
+plotly
+chart_studio
+joblib
+pytz
